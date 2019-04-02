@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Shoddy AFA
+{% endblock %}
+
+{% block scripts %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+<link rel="stylesheet" href="/static/CSS/webapp.css">
+
+{% endblock %}
+
+
+
+{% block body %}
+<div class="container">
+
+    <h1> Search Results - {{ param }} </h1>
+    {% if param == "tweet" %}
+
+      {% for item in data %}
+      <p> Result {{ loop.index }} </p>
+      <a> {{ item.id }} //</a>
+      <a> {{ item.author_id }} //</a>
+      <a> {{ item.text }} </a>
+
+      {% endfor %}
+
+      {% else %}
+
+
+      {% for item in data %}
+        <p> Result {{ loop.index }} </p>
+        <a> {{ item.handle }} //</a>
+        <a> {{ item.screenname }} </a>
+
+      {% endfor %}
+
+      {% endif %}
+
+
+</div>
+{% endblock %}

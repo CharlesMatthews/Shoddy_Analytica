@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block scripts %}
+<link rel="stylesheet" href="/static/CSS/login.css">
+<script type="text/javascript" src="/static/JS/register.js"></script>
+{% endblock %}
+
+
+
+{% block body %}
+<div class="container">
+      <form method="post">
+        {{ form.hidden_tag() }}
+
+        <fieldset class="form-group">
+          <h1>Password Reset</h1>
+
+
+          <div class="form-group">
+            {{ form.email.label(class="form-control-label")  }}
+
+            {% if form.email.errors %}
+              {{form.email(class="form-control form-control-lg is-invalid")}}
+              <div class="invalid-feedback">
+                {% for error in form.email.errors %}
+                  <span> {{ error }}</span>
+                {% endfor %}
+
+              </div>
+            {% else %}
+              {{ form.email(class="form-control from-control-lg")  }}
+            {% endif %}
+
+          </div>
+
+        </fieldset>
+        <div class="form-group">
+          {{ form.submit(class="btn btn-primary")}}
+        </div>
+
+  <div class = "border-top pt-5">
+    <small class="text-muted">
+      <a href="{{ url_for('users.login') }}">
+           Rememberd your Password?
+      </a>
+    </small>
+  </div>
+    <div>
+      <small class="text-muted">
+        <a href="{{ url_for('users.register') }}">
+             Not got an account? - Register here
+        </a>
+      </small>
+    </div>
+
+
+{% endblock %}

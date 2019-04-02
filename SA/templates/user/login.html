@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block scripts %}
+<link rel="stylesheet" href="/static/CSS/login.css">
+<script type="text/javascript" src="/static/JS/register.js"></script>
+{% endblock %}
+
+
+
+{% block body %}
+<div class="container">
+      <form method="post">
+        {{ form.hidden_tag() }}
+
+        <fieldset class="form-group">
+          <h1>User Login</h1>
+
+
+          <div class="form-group">
+            {{ form.email.label(class="form-control-label")  }}
+
+            {% if form.email.errors %}
+              {{form.email(class="form-control form-control-lg is-invalid")}}
+              <div class="invalid-feedback">
+                {% for error in form.email.errors %}
+                  <span> {{ error }}</span>
+                {% endfor %}
+
+              </div>
+            {% else %}
+              {{ form.email(class="form-control from-control-lg")  }}
+            {% endif %}
+
+          </div>
+          <div class="form-group">
+            {{ form.password.label(class="form-control-label")  }}
+            {% if form.password.errors %}
+              {{form.password(class="form-control form-control-lg is-invalid")}}
+              <div class="invalid-feedback">
+                {% for error in form.password.errors %}
+                  <span> {{ error }}</span>
+                {% endfor %}
+
+              </div>
+            {% else %}
+              {{ form.password(class="form-control from-control-lg")  }}
+            {% endif %}
+
+          <div class="form-check">
+          {{ form.rememberme(class="form-check-input") }}
+            {{ form.rememberme.label(class="form-check-label") }}
+
+
+          </div>
+        </fieldset>
+        <div class="form-group">
+          {{ form.submit(class="btn btn-primary")}}
+        </div>
+
+  <div class = "border-top pt-5">
+    <small class="text-muted">
+      <a href="{{ url_for('users.reset') }}">
+           Forgot Password?
+      </a>
+    </small>
+  </div>
+    <div>
+      <small class="text-muted">
+        <a href="{{ url_for('users.register') }}">
+             Not got an account? - Register here
+        </a>
+      </small>
+    </div>
+
+
+{% endblock %}

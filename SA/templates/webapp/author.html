@@ -1,0 +1,213 @@
+{% extends "layout.html" %}
+
+{% block title %}
+SA Author
+{% endblock %}
+
+{% block scripts %}
+<link href="https://fonts.googleapis.com/css?family=Dawning+of+a+New+Day|Raleway:900" rel="stylesheet">
+<link rel="stylesheet" href="/static/CSS/webapp.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+<script src="/static/JS/webapp.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+<script id="post" type="text/x-handlebars-template">
+    <div class="post">
+        {% raw -%}
+            {{ contents }}
+        {%- endraw %}
+        <button class="hide">Hide</button>
+    </div>
+</script>
+{% endblock %}
+
+
+
+{% block body %}
+
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-4">
+      <!-- SA Info section -->
+      <section id="info" class="border-bottom");
+">
+        <img id=info_logo src="{{ data.avatar }}" class="d-inline-block align-top heroimg" alt="" href="">
+        <a id="name" class="section_title" style="font-family:'Raleway', Black; sans-serif; font-size: 400%;">{{ data.screenname }}</a>
+        <a id="handle" style="font-family: 'Dawning of a New Day', cursive; font-size: 200%;">@{{ data.handle }}</a>
+      </section>
+      <!-- END of INFO -->
+
+      <!-- Archive -->
+      <section id="archive" class="border-bottom">
+        <h2 class="section_title">Archive</h2>
+        <ul>
+        <li><a href="{{ data.handle }}/tweets">Chronological list of {{ data.screenname }}'s tweets</a></li>
+        <li> <a href="{{ url_for('webapp.scraper') }}"> /// Request an account to be scraped </a> </li>
+        </ul>
+        </section>
+      <!-- End of Archive -->
+
+      <section class="border-bottom">
+
+        <section class="border-bottom">
+          <h2 class="section_title">Random Featured</h2>
+
+          <div id="recent">
+  {% for tweet, author in RANDOM %}
+
+            <div class="post">
+
+              <img class="rounded-circle account-img" style="height: 80px;  width: 80px;" src="{{ author.avatar }}">
+              <a> @{{author.handle}}</a>
+              <a>{{author.screename}}</a>
+              <div class="body">
+                  {{tweet.text}}
+              </div>
+              <div class="reactions">
+                Reactions:
+                  Likes: {{tweet.likes}} retweets:{{tweet.retweets}} Replies:{{tweet.replies}}
+              </div>
+              <br>
+              <div class="developer">
+
+                  TweetID: {{tweet.id}}
+                  Link: <a href="https://twitter.com/{{ author.handle }}/status/{{tweet.id}}">
+                    <i class="fab fa-twitter fa-fw"></i>
+                  </a>
+              </div>
+
+              </div>
+
+    {% endfor %}
+          </div>
+
+
+
+      </section>
+
+  </div>
+  <div class="col-xs-12 col-sm-4">
+
+  <section id="top_tweets" class="border-left border-right border-bottom">
+    <h2 class="section_title">Top Tweets Of All time</h2>
+
+    <div id="toptweet">
+      {% for tweet, author in TOP3 %}
+      <div class="post">
+
+        <img class="rounded-circle account-img" style="height: 80px;  width: 80px;" src="{{ author.avatar }}">
+        <a> @{{author.handle}}</a>
+        <a>{{author.screename}}</a>
+        <div class="body">
+            {{tweet.text}}
+        </div>
+        <div class="reactions">
+          Reactions:
+            Likes: {{tweet.likes}} retweets:{{tweet.retweets}} Replies:{{tweet.replies}}
+        </div>
+        <br>
+        <div class="developer">
+
+            TweetID: {{tweet.id}}
+            Link: <a href="https://twitter.com/{{ author.handle }}/status/{{tweet.id}}">
+              <i class="fab fa-twitter fa-fw"></i>
+            </a>
+        </div>
+
+        </div>
+        {% endfor %}
+    </div>
+
+  </section>
+
+  <section id="latest_tweets" class="border-left border-right">
+    <h2 class="section_title">Recent Tweets:</h2>
+
+    <div id="recent">
+        {% for tweet, author in RECENT3 %}
+
+      <div class="post">
+
+        <img class="rounded-circle account-img" style="height: 80px;  width: 80px;" src="{{ author.avatar }}">
+        <a> @{{author.handle}}</a>
+        <a>{{author.screename}}</a>
+        <div class="body">
+            {{tweet.text}}
+        </div>
+        <div class="reactions">
+          Reactions:
+            Likes: {{tweet.likes}} retweets:{{tweet.retweets}} Replies:{{tweet.replies}}
+        </div>
+        <br>
+        <div class="developer">
+            TweetID: {{tweet.id}}
+            Link: <a href="https://twitter.com/{{ author.handle }}/status/{{tweet.id}}">
+              <i class="fab fa-twitter fa-fw"></i>
+            </a>
+        </div>
+
+        </div>
+          {% endfor %}
+
+    </div>
+
+
+
+
+    <a class="newsfeed_link" href="{{ data.handle }}/tweets">See more tweets</a>
+
+  </section>
+
+</div>
+
+<div class="col-xs-12 col-sm-4">
+
+  <div class="container-fluid">
+    <div class="row">
+
+      <section class="border-bottom">
+
+        <h2 class="section_title">Basic Information</h2>
+
+        <h3>Bio: </h3><a>{{ data.bio }}</a>
+        <h3>Twitter Account ID: </h3><a>{{ data.id }}</a>
+        <h3>Followers: </h3><a>{{ data.followertot }} </a>
+        <h3>Following: </h3><a>{{ data.followingtot }} </a>
+        <h3>Tweets with Media: </h3><a>{{ data.mediatot }} </a>
+        <h3>Verified: </h3><a>{{ data.verified }} </a>
+        <h3>Private: </h3><a>{{ data.private }} </a>
+        <h3>Join Date and Time: </h3><a>{{ data.joindatetime }} </a>
+        <h3>Last Updated: </h3><a>{{ data.updatetime }} </a>
+        <h3>Profile Banner: </h3><img src="{{ data.background_image }}"" style="width:100.67%">
+        <form action="/api/{{data.handle}}/updateauthordata?token={{ session.utoken[0] }}&next={{ request.path }}" method="post">
+            <input type="submit" class="btn btn-outline-info" value=">Update Author Data" />
+        </form>
+
+      </section>
+
+
+
+    {% if trained %}
+    <section class="border-bottom">
+        <h2 class="section_title">NN output</h2>
+
+        <iframe src="/api/neuralnet?token={{ session.utoken[0] }}"></iframe>
+
+        <form action="/api/neuralnet?token={{ session.utoken[0] }}&next={{ request.path }}" method="post">
+            <input type="submit" class="btn btn-outline-info" value=">Update NN output" />
+        </form>
+
+
+    </section>
+    {% endif %}
+
+
+
+  </div>
+</div>
+
+</div>
+
+
+
+{% endblock %}

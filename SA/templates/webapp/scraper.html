@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block title %}
+SARequest
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="/static/JS/Scraper.js"></script>
+{% endblock %}
+
+
+{% block body %}
+<div class="container">
+
+  <h1>Scrape request.</h1>
+  <h6> You have {{ current_user.credits }} Credits <h6>
+
+    <form method="POST">
+        <div class="form-group">
+         <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroupPrepend">@</span>
+          </div>
+          <input type="text" class="form-control" id="username" name="Handle" placeholder="Twitter Handle e.g. kanyewest or realDonaldTrump" required>
+        </div>
+        <div class="form-group">
+          <button type="button" onclick="ValidCheck()" id="check" class="btn btn-outline-warning">Check account validity</button>
+        </div>
+
+        <div class="form-group">
+          <button class="btn btn-primary" id="subbut" type="submit" disabled>Scrape Account</button>
+        </div>
+    </form>
+
+<hr>
+<hr>
+    <form method="POST">
+        <div class="form-group">
+         <div class="input-group">
+          <input type="text" class="form-control"  name="Query" placeholder="Search Query eg. #filmcow" required>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary" id="subbut" type="submit">Scrape Search query </button>
+        </div>
+    </form>
+
+
+
+</div>
+
+
+{% endblock %}

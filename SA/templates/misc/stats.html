@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Shoddy AS
+{% endblock %}
+
+{% block scripts %}
+
+
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <h1> Statistics for ShoddyAnalytica: </h1>
+  <p> CPU load: {{ CPU }} </p>
+  <p> Mem load: {{ MEM }} </p>
+  <p> Registered Users: {{ UserTot}} </p>
+  <p> Total Tweets: {{ TweetTot }} </p>
+  <p> Scraped Twitter Accounts: {{ AuthorTot }} </p>
+  <p> Number of Datapoints: {{ DataTot }}</p>
+</div>
+
+{% endblock %}

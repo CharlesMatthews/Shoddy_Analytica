@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Shoddy AAPI
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <h1>API reference for ShoddyAnalytica </h1>
+  <p>All requests will return a JSON object.</p>
+
+  <p>All requests must be authenticated with a token.</p>
+
+    <p>Your API token is: {{ session.utoken[0]  }}</p>
+
+
+
+  <h3>Authors</h3>
+  <p>Returns Account data for the specified user</p>
+  <p>/api/@USERHANDLE?token=TOKENHERE</p>
+  <br>
+
+
+  <h3>Tweets</h3>
+
+  <h3>TopTweets</h3>
+
+  <h3>Neural Net Output</h3>
+
+  <h3>Followers</h3>
+
+  <h3>Following</h3>
+</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block title %}
+ShoddyAnalytica
+{% endblock %}
+
+{% block scripts %}
+<link rel="stylesheet" href="/static/CSS/webapp.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+{% raw %}
+<script id="post" type="text/x-handlebars-template">
+  <div class="post">
+
+    <img class="rounded-circle account-img" style="height: 80px;  width: 80px;" src="{{ author_avatar }}">
+    <a> @{{author_handle}}</a>
+    <a>{{author_screename}}</a>
+    <div class="body">
+        {{tweet_text}}
+    </div>
+    <div class="reactions">
+      Reactions:
+        Likes: {{tweet_likes}} retweets:{{tweet_retweets}} Replies:{{tweet_replies}}
+    </div>
+    <div class="developer">
+
+        id: {{tweet_id}} sentiment:{{tweet_sentiment}}
+    </div>
+
+          <button class="hide">Hide</button>
+
+    </div>
+
+</script>
+{% endraw %}
+<script src="/static/JS/TweetHandler.js"></script>
+
+{% endblock %}
+
+
+{% block body %}
+<div class="container">
+  <h1> Full Tweet Archive for: {{ Author }}
+
+    <a href="/api/{{ Author }}/export?token={{ session.utoken[0] }}" class="btn btn-danger">Export!</a>
+
+    <span class="btn-group">
+      </div>
+    </span>
+  </h1>
+
+  <div id="posts">
+  </div>
+
+  <div id="LoadMore">
+      <button class="btn btn-primary" id="subbut" onclick="load()" type="submit">Load more posts</button>
+  </div>
+</div>
+{% endblock %}

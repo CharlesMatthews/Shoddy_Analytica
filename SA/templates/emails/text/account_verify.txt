@@ -1,0 +1,5 @@
+Hi {{ user.username }},
+
+Please verify your account by clicking on the following link:
+
+{{ url_for('users.reset_confirm', token=token, _external=True) }}

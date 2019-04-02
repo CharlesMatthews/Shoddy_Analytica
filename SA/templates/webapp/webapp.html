@@ -1,0 +1,224 @@
+{% extends "layout.html" %}
+
+{% block title %}
+ShoddyAnalytica
+{% endblock %}
+
+{% block scripts %}
+<link rel="stylesheet" href="/static/CSS/webapp.css">
+<script src="/static/JS/webapp.js"></script>
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
+<script id="post" type="text/x-handlebars-template">
+  <div class="post">
+
+    <img class="rounded-circle account-img" style="height: 80px;  width: 80px;" src="{{ author_avatar }}">
+    <a> @{{author_handle}}</a>
+    <a>{{author_screename}}</a>
+    <div class="body">
+        {{tweet_text}}
+    </div>
+    <div class="reactions">
+      Reactions:
+        Likes: {{tweet_likes}} retweets:{{tweet_retweets}} Replies:{{tweet_replies}}
+    </div>
+      </div>
+
+</script>
+
+
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12 col-sm-4">
+    		<!-- SA Info section -->
+    		<section id="info" class="border-bottom">
+      			<img src="/static/images/SA1.svg" class="heroimg">
+      			<h1 class="section_title">ShoddyAnalytica</h1>
+      			<p>ShoddyAnalytica provides an interactive way to explore scraped Twitter data.</p>
+      	</section>
+    		<!-- END of INFO -->
+
+    		<!-- Archive -->
+    		<section id="archive" class="border-bottom">
+    			<h2 class="section_title">Archive</h2>
+    			<ul>
+    			<li><a href="/app/*/tweets">Chronological list of all scraped tweets</a></li>
+          <li><a href="/aclist">List of Scraped Accounts</a></li>
+          <li> <a href="{{ url_for('webapp.scraper') }}"> Request an account to be scraped</a></li>
+      		</ul>
+      		</section>
+    		<!-- End of Archive -->
+
+
+    		<!-- Top 10 Accounts by followers -->
+    		<section id="" class="border-bottom">
+
+    			<h2 class="section_title">Account by most followers</h2>
+
+    			<div class="table-responsive">
+    				<table class="table">
+    	    			<thead>
+    	    				<tr>
+    	    				<th></th>
+    	    				<th>Name</th>
+
+    	    				<th>Followers</th>
+
+                  <th>Link</th>
+
+    	    				</tr>
+    	    			</thead>
+    					<tbody>
+
+                  {% for item in ACLIST %}
+                  <tr>
+                    <td><img src="{{ item.avatar }}" style=" width: 25px"></td>
+        						<td><a >{{ item.handle }}</a></td>
+        						<td>{{ item.followertot }}</td>
+                    <td>            <a href="/app/{{ item.handle }}">
+                                <span style="color: #CC0841;">
+                                  <i class="fas fa-brain"></i>
+                                </span>
+                                </a></td>
+                    </tr>
+                  {% endfor %}
+
+
+    											</tbody>
+    				</table>
+    			</div>
+
+    		</section>
+    		<!-- End of top 10 Accounts by followers -->
+    </div>
+    <div class="col-xs-12 col-sm-4">
+
+		<section id="top_tweets" class="border-left border-right border-bottom">
+			<h2 class="section_title">Top Tweets Of All time</h2>
+      <div id="toptweet">
+        {% for tweet, author in TOP3 %}
+        <div class="post">
+
+          <img class="rounded-circle account-img" style="height: 80px;  width: 80px;" src="{{ author.avatar }}">
+          <a> @{{author.handle}}</a>
+          <a>{{author.screename}}</a>
+          <div class="body">
+              {{tweet.text}}
+          </div>
+          <div class="reactions">
+            Reactions:
+              Likes: {{tweet.likes}} retweets:{{tweet.retweets}} Replies:{{tweet.replies}}
+          </div>
+          <br>
+          <div class="developer">
+
+              TweetID: {{tweet.id}}
+              Link: <a href="https://twitter.com/{{ author.handle }}/status/{{tweet.id}}">
+                <i class="fab fa-twitter fa-fw"></i>
+              </a>
+          </div>
+
+          </div>
+      {% endfor %}
+      </div>
+
+		</section>
+
+		<section id="latest_tweets" class="border-left border-right">
+			<h2 class="section_title">Recent Tweets:</h2>
+
+      <div id="recent">
+          {% for tweet, author in RECENT3 %}
+
+        <div class="post">
+
+          <img class="rounded-circle account-img" style="height: 80px;  width: 80px;" src="{{ author.avatar }}">
+          <a> @{{author.handle}}</a>
+          <a>{{author.screename}}</a>
+          <div class="body">
+              {{tweet.text}}
+          </div>
+          <div class="reactions">
+            Reactions:
+              Likes: {{tweet.likes}} retweets:{{tweet.retweets}} Replies:{{tweet.replies}}
+          </div>
+          <br>
+          <div class="developer">
+              TweetID: {{tweet.id}}
+              Link: <a href="https://twitter.com/{{ author.handle }}/status/{{tweet.id}}">
+                <i class="fab fa-twitter fa-fw"></i>
+              </a>
+          </div>
+
+          </div>
+            {% endfor %}
+
+      </div>
+
+
+			<a class="newsfeed_link" href="/app/*/tweets">See more tweets</a>
+
+		</section>
+
+	</div>
+
+	<div class="col-xs-12 col-sm-4">
+
+		<div class="container-fluid">
+			<div class="row">
+
+				<section id="daily_stats" class="border-bottom">
+
+					<h2 class="section_title">Basic Information</h2>
+          <p> CPU load: {{ CPU }} </p>
+          <p> Mem load: {{ MEM }} </p>
+          <p> Registered Users: {{ UserTot}} </p>
+          <p> Total Tweets: {{ TweetTot }} </p>
+          <p> Scraped Twitter Accounts: {{ AuthorTot }} </p>
+          <p> Number of Datapoints: {{ DataTot }}</p>
+	  		</section>
+
+		  		<section class="border-bottom">
+			  		<h2 class="section_title">Random Featured</h2>
+            <div id=random>
+              {% for tweet, author in RANDOM %}
+
+            <div class="post">
+
+              <img class="rounded-circle account-img" style="height: 80px;  width: 80px;" src="{{ author.avatar }}">
+              <a> @{{author.handle}}</a>
+              <a>{{author.screename}}</a>
+              <div class="body">
+                  {{tweet.text}}
+              </div>
+              <div class="reactions">
+                Reactions:
+                  Likes: {{tweet.likes}} retweets:{{tweet.retweets}} Replies:{{tweet.replies}}
+              </div>
+              <br>
+              <div class="developer">
+                  TweetID: {{tweet.id}}
+                  Link: <a href="https://twitter.com/{{ author.handle }}/status/{{tweet.id}}">
+                    <i class="fab fa-twitter fa-fw"></i>
+                  </a>
+              </div>
+
+              </div>
+                {% endfor %}
+            </div>
+
+					<div class="col-sm-6">
+          </div>
+
+				</section>
+
+
+
+    </div>
+  </div>
+</div>
+{% endblock %}

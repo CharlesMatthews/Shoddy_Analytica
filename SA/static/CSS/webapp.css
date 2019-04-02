@@ -1,0 +1,53 @@
+@keyframes hide {
+    0% {
+        opacity: 1;
+        height: 100%;
+        line-height: 100%;
+        padding: 20px;
+        margin-bottom: 10px;
+    }
+    75% {
+        opacity: 0;
+        height: 100%;
+        line-height: 100%;
+        padding: 20px;
+        margin-bottom: 10px;
+    }
+    100% {
+        opacity: 0;
+        height: 0px;
+        line-height: 0px;
+        padding: 0px;
+        margin-bottom: 0px;
+    }
+}
+
+.heroimg {
+  width: 95px;
+  border-radius: 500px;
+  float: left;
+  margin: 0 15px 0 0;
+}
+
+.section_title{
+  font-size: 1.5rem;
+
+}
+
+.hide  {
+    float: right;
+}
+
+.post {
+    background-color: #f0f0f0;
+    padding: 20px;
+    margin-bottom: 10px;
+    animation-name: hide;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    animation-play-state: paused;
+}
+
+body {
+    padding-bottom: 50px;
+}

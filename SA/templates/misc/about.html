@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}
+ShoddyAnalytica
+{% endblock %}
+
+{% block scripts %}
+<link rel="stylesheet" href="/static/CSS/about.css">
+<script type="text/javascript" src="/static/JS/about.js"></script>
+<script type="text/javascript" src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
+{% endblock %}
+
+
+{% block body %}
+<div class="wrapper">
+  <div class="bg-text">About SA</div>
+  <div class="herologo"></div>
+  <div id="bg"></div>
+</div>
+
+<div class="container">
+  <h8> /// Developed as part of AQA A level Computing Coursework </h8>
+  <br>
+  <br>
+  <h1> ShoddyAnalytica </h1>
+  <p> SA aims to enable the easy scraping and analysis of Twitter data. This data is then used in some ML applications and is served up to the user through our API as well as the GSheets exporter</p>
+  <h1> Developer </h1>
+  <h3>Charles Matthews</h3>
+  <img class="rounded-circle account-img" style="height: 150px;  width: 150px;" src="https://avatars0.githubusercontent.com/u/31955202?s=460&v=4"> <span><div class="LI-profile-badge"  data-version="v1" data-size="medium" data-locale="en_US" data-type="horizontal" data-theme="light" data-vanity="charles-henry-matthews-000"><a class="LI-simple-link" href='https://uk.linkedin.com/in/charles-henry-matthews-000?trk=profile-badge'>Charles Matthews</a></div></span>
+</div>
+{% endblock %}
