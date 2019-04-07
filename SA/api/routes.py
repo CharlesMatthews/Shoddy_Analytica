@@ -15,7 +15,7 @@ import datetime
 api = Blueprint('api', __name__)
 
 @api.route("/api/<id>/data")
-def ApiAuthorData(id):
+def ApiDataOut(id):
     """
     Returns Account data for the specified user/ Tweet
 
@@ -44,7 +44,7 @@ def ApiAuthorData(id):
             error = {'Tweet_Exists': 'False'}
             return error, status.HTTP_400_BAD_REQUEST
         json_data = ut.Build_JSON_Tweet(dataout)
-        json_data['sentiment_score'] = apiut.getsentiment(dataout.text)
+
     return json_data, status.HTTP_200_OK
 
 
@@ -65,7 +65,7 @@ def ApiSentiment():
         return error, status.HTTP_400_BAD_REQUEST
 
     jsonout = {}
-    jsonout['sentiment_score'] = apiut.getsentiment(dataout.text)
+    jsonout['sentiment_score'] = ut.getsentiment(dataout.text)
 
 
     return jsonout, status.HTTP_200_OK
@@ -75,7 +75,7 @@ def ApiSentiment():
 
 
 @api.route("/api/<author>/toptweet")
-def ApiAuthortTop(author, methods=['POST', 'GET']):
+def ApiAuthorTop(author, methods=['POST', 'GET']):
     """Returns the top tweet of the specified user"""
 
     end = request.args.get('end')
@@ -92,7 +92,7 @@ def ApiAuthortTop(author, methods=['POST', 'GET']):
         if result is None:
             error = {'Author_Exists': 'False'}
             return error, status.HTTP_400_BAD_REQUEST
-        dataout = Tweet.query.filter_by(Tweet.handle == author).order_by(Tweet.retweets.desc()).limit(end).all()
+        dataout = Tweet.query.filter_by(author_id=result.id).order_by(Tweet.retweets.desc()).limit(end).all()
 
     jsonlist =[]
     for item in dataout:
@@ -103,12 +103,7 @@ def ApiAuthortTop(author, methods=['POST', 'GET']):
 
 @api.route("/api/<author>/tweets")
 def ApiAuthorTweets(author, methods=['POST', 'GET']):
-    """Returns Tweet archive of specified user
-        Example Request:
-
-        Example Response:
-
-    """
+    """Returns Tweet archive of specified user."""
     tok = request.args.get('token')
 
     if tok is None or apiut.checktoken(tok) ==False:
@@ -135,7 +130,6 @@ def ApiAuthorTweets(author, methods=['POST', 'GET']):
     jsonlist =[]
     for item in dataout:
         json_data = ut.Build_JSON_Tweet(item)
-        json_data['sentiment_score'] = apiut.getsentiment(item.text)
         jsonlist.append(json_data)
 
     return jsonlist, status.HTTP_200_OK
@@ -144,12 +138,7 @@ def ApiAuthorTweets(author, methods=['POST', 'GET']):
 
 @api.route("/api/<author>/export")
 def ApiAuthorExport(author, methods=['POST', 'GET']):
-    """Returns Tweet archive of specified user
-        Example Request:
-
-        Example Response:
-
-    """
+    """Exports author data to the user"""
     tok = request.args.get('token')
 
     if tok is None or apiut.checktoken(tok) ==False:
@@ -288,6 +277,7 @@ def ApiUpdateAuthorData(author):
 
 @api.route("/supersecreturl/creditadd")
 def APITEMP():
+    """Testing URL for adding addtional scraping credits"""
     db.create_all()
 
     #author_1 = Author(id=1086397448304630020, handle="couplesdynamic2", screenname="Couples Dynamicd", bio="", joindatetime=dt, followertot=23, followingtot=72,liketot=543, mediatot=0, verified=0, private=0, avatar="https://openclipart.org/image/2400px/svg_to_png/277087/Female-Avatar-3.png")
@@ -301,6 +291,7 @@ def APITEMP():
 """
 @api.route("/api/data/temp")
 def temp():
+    #Testing url inserting data to the db
     tok = request.args.get('token')
 
     if tok is None or apiut.checktoken(tok) ==False:

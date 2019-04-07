@@ -46,7 +46,6 @@ def AuthorPage(handle):
     TOP3 = webut.Get_Top_Three(handle)
     RECENT3 = webut.Get_Recent_Three(handle)
     trained=False
-    trained=True
     if handle == "realDonaldTrump":
         trained = True
     return render_template("/webapp/author.html",data = data, RANDOM=RANDOM, TOP3= TOP3, RECENT3=RECENT3, trained=trained)
@@ -128,7 +127,7 @@ def scraper():
 
             if query is not None:
                 flash("Thanks! We've received your request for scraping // '" +str(query) + "' //. Expect an email from us shortly! 👀", 'info')
-                #current_user.credits -= 0
+                current_user.credits -= 1
                 webut.Twint_Scrape_Query.submit(query, current_user)
                 #webut.Twint_Scrape_Query(query, current_user)
             else:
@@ -138,14 +137,12 @@ def scraper():
                     flash("Invalid Account! :(", 'warning')
                 else:
                     flash("Thanks! We've received your request for scraping @" +str(hdl) + ". Expect an email from us shortly! 👀", 'info')
-                    #current_user.credits -= 0
+                    current_user.credits -= 1
 
                     webut.Twint_Scrape_Account.submit(hdl, current_user)
                     #webut.Twint_Scrape_Account(hdl, current_user)
 
-
-
-            #db.session.commit()
+            db.session.commit()
             return redirect(url_for('webapp.scraper'))
 
     return render_template("/webapp/scraper.html")
