@@ -16,29 +16,38 @@ Shoddy AAPI
 
     <p>Your API token is: {{ session.utoken[0]  }}</p>
 
+      <h2>Below are the key API routes: </h2> <br> <br>
 
-      <h3>General Data Out:</h3>
+  <h3>Data out</h3>
+    <iframe src="/api/25073877/data?type=author&token={{ session.utoken[0] }}" onload="this.width=screen.width;this.height=screen.height;"></iframe>
+
+    <br>
+      <h3>Get Sentiment</h3>
+<iframe src="/api/getsentiment?token={{ session.utoken[0] }}&tweetid=929511061954297857" onload="this.width=screen.width;this.height=screen.height;"></iframe>
 
 
-  <h3>Author Handling:</h3>
-  <p>Returns Account data for the specified user</p>
-  <p>/api//data?token={{ session.utoken[0] }}</p>
-  <br>
-  <br>
+/api/<author>/tweets
 
-  <h2>Tweet Handling:</h2>
 
-  <h3>TopTweets</h3>
-  <a>/api/neuralnet?token={{ session.utoken[0] }}&end=NumberOfTweetsToReturn</a>
+<h3>Author Tweets</h3>
+
+<iframe src="/api/trishapaytas/tweets?token={{ session.utoken[0] }}&end=4&offset=4&random=1" onload="this.width=screen.width;this.height=screen.height;"></iframe>
+<br>
+
+<h3>Author List</h3>
+<iframe src="/api/authors?token={{ session.utoken[0] }}" onload="this.width=screen.width;this.height=screen.height;"></iframe>
+<br>
+
+
+<br>
+  <h3>Top Tweet</h3>
   <iframe src="/api/trishapaytas/toptweet?token={{ session.utoken[0] }}&end=3" onload="this.width=screen.width;this.height=screen.height;"></iframe>
-
+<br>
   <h3>Neural Net Output</h3>
   <p>Outputs last run of the Neural network - to refresh the data make a POST request</p>
-  <a>/api/neuralnet?token={{ session.utoken[0] }}</a>
+
   <iframe src="/api/neuralnet?token={{ session.utoken[0] }}"" onload="this.width=screen.width;this.height=screen.height;"></iframe>
+<br>
 
-  <h3>Followers</h3>
-
-  <h3>Following</h3>
 </div>
 {% endblock %}

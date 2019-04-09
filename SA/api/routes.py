@@ -56,16 +56,18 @@ def ApiSentiment():
     tok = request.args.get('token')
     tweetid = request.args.get('tweetid')
 
+    if tok is None or apiut.checktoken(tok) ==False:
+        error = {'Token_Verification': 'False'}
+        return error, status.HTTP_403_FORBIDDEN
 
+    data = Tweet.query.get(tweetid)
 
-    if tweetid is not None:
-        dataout = Tweet.query.get(tweetid)
-    else:
+    if data is None:
         error = {'Tweet_Exists': 'False'}
         return error, status.HTTP_400_BAD_REQUEST
 
     jsonout = {}
-    jsonout['sentiment_score'] = ut.getsentiment(dataout.text)
+    jsonout['sentiment_score'] = ut.getsentiment(data.text)
 
 
     return jsonout, status.HTTP_200_OK

@@ -14,6 +14,7 @@ import requests
 @webapp.route("/app")
 @login_required
 def dashboard():
+    """Main data dashboard - mashup of all data on system + general stats"""
     if ut.sessiongen(True) == False:
         return redirect(url_for('misc.index'))
 
@@ -34,7 +35,7 @@ def dashboard():
 def AuthorPage(handle):
     if ut.sessiongen(True) == False:
       return redirect(url_for('index'))
-    """Returns list of users following the specified account."""
+    """Author "dashboard" returns similar data to dashboard but more account specific"""
 
     data = Author.query.filter_by(handle=handle).first()
 
@@ -46,7 +47,7 @@ def AuthorPage(handle):
     TOP3 = webut.Get_Top_Three(handle)
     RECENT3 = webut.Get_Recent_Three(handle)
     trained=False
-    if handle == "realDonaldTrump":
+    if handle == "realdonaldtrump":
         trained = True
     return render_template("/webapp/author.html",data = data, RANDOM=RANDOM, TOP3= TOP3, RECENT3=RECENT3, trained=trained)
 
@@ -56,6 +57,8 @@ def AuthorPage(handle):
 @webapp.route("/app/<author>/tweets")
 @login_required
 def AuthorTweetsPage(author):
+
+    """Author Tweets page - allows all tweets of an author to be viewed through the magic of JS"""
     if ut.sessiongen(True) == False:
       return redirect(url_for('misc.index'))
 
@@ -77,6 +80,7 @@ def AuthorTweetsPage(author):
 @webapp.route("/search")
 @login_required
 def search():
+    """Search page - returns results for either Tweets / Accounts"""
     ut.sessiongen(True)
 
     query = request.args.get('search')
@@ -113,7 +117,7 @@ def aclist():
 @login_required
 def scraper():
     """
-    User account page
+    Scraper page - allows users to be scrape either an account or a twitter query
     """
     ut.sessiongen(True)
 

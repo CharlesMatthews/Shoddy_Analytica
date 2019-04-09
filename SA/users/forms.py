@@ -6,6 +6,9 @@ from wtforms.validators import Length, EqualTo, DataRequired, Email
 
 from SA.models import User
 
+
+#Flask forms for key pages.
+
 class Form_Register(FlaskForm):
     username = StringField('Username', validators = [Length(min=5, max=20), DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])

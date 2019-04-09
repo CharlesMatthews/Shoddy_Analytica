@@ -19,6 +19,7 @@ users = Blueprint('users', __name__)
 
 @users.route("/register", methods= ["GET", "POST"])
 def register():
+    """account_creation - checks unique constraints and then adds user to db +token etc."""
     ut.sessiongen(False)
     if current_user.is_authenticated:
         return redirect(url_for('misc.index'))
@@ -51,6 +52,7 @@ def register():
 
 @users.route("/login", methods= ["GET", "POST"])
 def login():
+    """Login page + flow for a user."""
     ut.sessiongen(False)
     if current_user.is_authenticated:
         return redirect(url_for('misc.index'))
@@ -93,7 +95,9 @@ def account():
     ut.sessiongen(True)
     form = Form_Update_Account()
     if form.validate_on_submit():
-
+        """
+        Checks email + username are not taken before updating account
+        """
 
         if form.avatar.data:
             current_user.avatar = userut.save_user_avatar(form.avatar.data)
@@ -118,6 +122,7 @@ def account():
 
 @users.route("/reset", methods= ["GET", "POST"])
 def reset():
+    """Reset password request - user inserts email  & gets email with token"""
     ut.sessiongen(False)
     if current_user.is_authenticated:
         return redirect(url_for('misc.index'))
@@ -132,6 +137,7 @@ def reset():
 
 @users.route("/reset/<token>", methods= ["GET", "POST"])
 def reset_confirm(token):
+    """Confirms password reset - checks token and updates password"""
     ut.sessiongen(False)
 
     user = User.verify_token(token)
@@ -157,6 +163,7 @@ def reset_confirm(token):
 @users.route("/verify", methods= ["GET", "POST"])
 @login_required
 def verify():
+    """Requests a verification email - sends link with token to verify account"""
     ut.sessiongen(False)
     if current_user.verified ==1:
         flash("Account Already Verified", 'info')
@@ -171,6 +178,7 @@ def verify():
 
 @users.route("/verify/<token>", methods= ["GET", "POST"])
 def verify_confirm(token):
+    """Verifies a user account against a valid email address with token sent earlier + gives 5 sceaping credits"""
     ut.sessiongen(False)
 
     user = User.verify_token(token)

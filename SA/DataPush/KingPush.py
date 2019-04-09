@@ -4,6 +4,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 
 def DAYTONA(FILE_PATH, FFN):
+    """Uploads a file to GDrive and returns a link"""
     gauth = GoogleAuth()
     scope = ['https://www.googleapis.com/auth/drive']
     gauth.credentials = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)

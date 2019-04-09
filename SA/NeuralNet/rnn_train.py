@@ -23,6 +23,11 @@ import numpy as np
 import my_txtutils as txt
 tf.set_random_seed(0)
 
+
+#TRAINS A NEURAL NETWORK ON A GIVEN TRAINING DATA WITHIN A TEXT FILE / FILES.
+
+
+
 # model parameters
 #
 # Usage:

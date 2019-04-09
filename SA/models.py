@@ -9,6 +9,9 @@ def Get_User_From_ID(user_id):
     return User.query.get(int(user_id))
 
 
+#Sets out database structure + key objects used in system - User, Author, Post - their datatypes, validation and relationships.
+
+
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), index=True, unique=True, nullable=False)

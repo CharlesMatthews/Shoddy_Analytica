@@ -2,6 +2,9 @@ import tensorflow as tf
 import numpy as np
 import SA.NeuralNet.my_txtutils as my_txtutils
 
+#Runs A Trained NEURAL NETWORK and writes output to a text file.
+
+
 def nnout():
     ALPHASIZE = my_txtutils.ALPHASIZE
     NLAYERS = 3

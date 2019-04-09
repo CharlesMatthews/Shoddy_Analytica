@@ -10,6 +10,11 @@ from SA import mail, executor
 from PIL import Image
 
 
+
+"""
+Emails to users for account activity: verification, creation + password_reset
+"""
+
 @executor.job
 def Email_Account_Creation(user):
     message = Message(subject="SA - Account Creation", sender='chenrymatthews@gmail.com', recipients=[user.email])
