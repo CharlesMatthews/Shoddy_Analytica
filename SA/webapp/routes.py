@@ -133,7 +133,7 @@ def scraper():
                 flash("Thanks! We've received your request for scraping // '" +str(query) + "' //. Expect an email from us shortly! 👀", 'info')
                 current_user.credits -= 1
                 webut.Twint_Scrape_Query.submit(query, current_user)
-                #webut.Twint_Scrape_Query(query, current_user)
+
             else:
                 r = requests.get('https://twitter.com/users/username_available?username=' + hdl )
                 data = r.json()
@@ -144,7 +144,7 @@ def scraper():
                     current_user.credits -= 1
 
                     webut.Twint_Scrape_Account.submit(hdl, current_user)
-                    #webut.Twint_Scrape_Account(hdl, current_user)
+
 
             db.session.commit()
             return redirect(url_for('webapp.scraper'))

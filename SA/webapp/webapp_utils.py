@@ -43,11 +43,9 @@ def Get_Top_Three(handle):
     Returns 3 top tweets from a given author
     """
     if handle =="*":
-        #dataout = Tweet.query.order_by(Tweet.retweets.desc()).limit(3).all()
         dataout = db.session.query(Tweet, Author).join(Author).order_by(Tweet.retweets.desc()).limit(3).all()
     else:
         result = Author.query.filter_by(handle=handle).first()
-        #dataout = Tweet.query.filter_by(author_id = result.id).order_by(Tweet.retweets.desc()).limit(3).all()
         dataout = db.session.query(Tweet, Author).filter_by(author_id = result.id).join(Author).order_by(Tweet.retweets.desc()).limit(3).all()
     return dataout
 
@@ -63,16 +61,8 @@ def Get_Random_Three(handle):
         dataout = db.session.query(Tweet, Author).join(Author).order_by(func.random()).limit(3).all()
     else:
         result = Author.query.filter_by(handle=handle).first()
-        #dataout = Tweet.query.filter_by(author_id=result.id).order_by(func.random()).limit(3).all()
-        dataout = db.session.query(Tweet, Author).filter_by(author_id = result.id).join(Author).order_by(func.random()).limit(3).all()
 
-        """
-        print(dataout)
-        for tweet, author in dataout:
-            print(tweet)
-            print(author)
-            print(author.id)
-        """
+        dataout = db.session.query(Tweet, Author).filter_by(author_id = result.id).join(Author).order_by(func.random()).limit(3).all()
 
     return dataout
 
@@ -86,8 +76,6 @@ def Get_Recent_Three(handle):
         dataout = db.session.query(Tweet, Author).join(Author).order_by(Tweet.created_at.desc()).limit(3).all()
     else:
         result = Author.query.filter_by(handle=handle).first()
-        #dataout = Tweet.query.filter_by(author_id = result.id).order_by(Tweet.created_at.desc()).limit(3).all()
-        #Old db query ^^
         dataout = db.session.query(Tweet, Author).filter_by(author_id = result.id).join(Author).order_by(Tweet.created_at.desc()).limit(3).all()
 
     return dataout
@@ -139,10 +127,11 @@ def Scraped_DB_Insert(Tweets):
 
 
         except IntegrityError:
-            db.session.rollback()
-        #print("OwO")
-        try:
             #print("OOPSIE WOOPSIE FUCKY WUCKY UWU")
+            db.session.rollback()
+            
+        try:
+            #print("OwO")
             Author_ID, Author_Handle, Author_Screename = TweetItem.user_id, TweetItem.username, TweetItem.name
             Author_FerT, Author_FolT, Author_LikeTot, Author_MediaTot = 0, 0, 0, 0
             Author_Bio, Author_Avatar, Author_BGImg  = "SA- Author Data not retrieved yet!", "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png", ""
@@ -155,12 +144,9 @@ def Scraped_DB_Insert(Tweets):
             db.session.commit()
 
         except IntegrityError:
-            #print(":()")
+            print(":()")
             db.session.rollback()
-        #print(Tweets)
 
-    #print(Tweets[0])
-    #print(Tweets[0].id)
     return
 ##
 #
@@ -172,7 +158,7 @@ def Scrape_Cleanup(USER, FFN, Tweets):
     Calls email to user with data link
     """
     FILE_PATH = os.path.join(os.getcwd(),"dataout", "tweets.csv")
-    #Scraped_DB_Insert.submit()
+
     Scraped_DB_Insert(Tweets)
     GdriveLink =  PUSHA.DAYTONA(FILE_PATH, FFN)
     Email_Scraper_Success.submit(GdriveLink, USER)
@@ -198,7 +184,7 @@ def Twint_Scrape_Account(SCRAPE_HANDLE, USER):
     twint.run.Search(TConfig)
     Tweets = twint.output.tweets_object
     Scrape_Cleanup.submit(USER, SCRAPE_HANDLE, Tweets)
-    #Scrape_Cleanup(USER, SCRAPE_HANDLE, Tweets)
+
     return
 
 
@@ -220,5 +206,5 @@ def Twint_Scrape_Query(SCRAPE_QUERY, USER):
     twint.run.Search(TConfig)
     Tweets = twint.output.tweets_object
     Scrape_Cleanup.submit(USER, SCRAPE_QUERY, Tweets)
-    #Scrape_Cleanup(USER, SCRAPE_QUERY, Tweets)
+
     return

@@ -19,9 +19,6 @@ from threading import Thread
 import twint
 
 
-
-
-
 @executor.job
 def RNN_Generate_Text():
     """Generates fresh text from the RNN"""
@@ -40,33 +37,22 @@ def Email_Gdrive_Export(GdriveLink, user):
 
 @executor.job # This is a FLASK-EXECUTOR decorator (Async function)
 def Export_GDrive(author, usertoken):
-    """"""
+    """
+
+    Additional feature to build out at a later time - Export from the DB to a CSV & shared to user over GSheets.
+
+    (More user friendly data export.)
+
+    """
     if author =="*":
         Tweets = Tweets.query.all()
-
+    else:
+        Tweets = Tweet.query.filter_by(author=author).all()
     user = User.query.filter_by(token=usertoken).first()
-    token = user.generate_token()
 
-    Tweets = Tweet.query.filter_by(author=author).all()
+    #GdriveLink = PUSHA.DAYTONA(FILE_PATH, author.handle)
 
-
-    FILE_NAME2 = token +".csv"
-    FILE_NAME = "tweets.csv"
-    print(FILE_NAME)
-    FILE_PATH = os.path.join(os.getcwd(), FILE_NAME)
-    #FILE_PATH = os.path.join(os.getcwd(),"SA","DataPush", FILE_NAME)
-    #FILE_PATH2 = os.path.join(os.getcwd(),"SA","DataPush", FILE_NAME2)
-    #BUILD OUT DB REQUEST TO CSV TONIGHT
-    """
-    c = csv.writer(open(FILE_PATH2, "w"))
-    for item in Tweets:
-        c.writerow([item.id,item.author_id, item.text, item.link, item.location, item.hashtags, item.mentions, item.likes, item.retweets, item.replies, item.updatetime])
-    """
-
-
-    GdriveLink = PUSHA.DAYTONA(FILE_PATH, author.handle)
-
-    Email_Gdrive_Export.submit(GdriveLink, user)
+    #Email_Gdrive_Export.submit(GdriveLink, user)
 
     return
 

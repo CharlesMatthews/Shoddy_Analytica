@@ -62,7 +62,6 @@ def login():
         if user and crypt.check_password_hash(user.password_hash, form.password.data):
             session["utoken"].append(user.token)
             login_user(user, remember=form.rememberme.data)
-            #print(user.token)
             flash(f"Logged in as {form.email.data.lower()}!", 'success')
             Forward = request.args.get("next")
             if Forward:

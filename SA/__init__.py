@@ -1,5 +1,11 @@
-import os
+"""
+This file does lots of lovely imports + setting up objects so that when one file imports another
+e.g. a routes importing Utilities - it does not break as a result of trying to import something again / loops of imports back and forth.
 
+Either way - important as it allows for a package structure as opposed to needing to be in one big horrid mess of a file!
+"""
+
+import os
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -42,7 +48,6 @@ def generate_app():
     login_mgr.init_app(app)
     mail.init_app(app)
     executor.init_app(app)
-    #api.init_app(app)
 
     with app.test_request_context():
         db.create_all()
