@@ -44,16 +44,21 @@ function PWWindowInitialLoad(){
         };
 
 
+function r(f){/in/.test(document.readyState)?setTimeout('r('+f+')',9):f()}
+//Function which checks if dom is loaded and runs if so.
+
 function PWWindowHandler(){ // Function to handle the loading splash screen
   PWWindowInitialLoad() // Loads in window
   getRandomImage(random_images_array, '/images/')  // Picks a random logo
   var elements = document.getElementsByClassName('btn btn-outline-light');
-  window.onload = function() {
-    //When loaded
-    setTimeout(window.loading_screen.finish(), 10);
-    //Close the loading screen
-    console.log("Don’t worry so much about money. Worry about if people start deciding to kill reporters. That's a quote. For the reason why, you can say I want reporters to know I make more money than them, especially Matt Pearce.")
-  };
+
+  r(function(){
+      //When loaded
+        setTimeout(window.loading_screen.finish(), 10);
+        //Close the loading screen
+        console.log("Don’t worry so much about money. Worry about if people start deciding to kill reporters. That's a quote. For the reason why, you can say I want reporters to know I make more money than them, especially Matt Pearce.")
+
+    });
 }
 
 

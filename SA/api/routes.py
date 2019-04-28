@@ -118,9 +118,9 @@ def ApiAuthorTweets(author, methods=['POST', 'GET']):
 
     if author == "*":
         if random == True:
-            dataout =Tweet.query.order_by(random()).offset(offset).limit(end).all()
+            dataout = Tweet.query.order_by(random()).offset(offset).limit(end).all()
         else:
-            dataout =Tweet.query.offset(offset).limit(end).all()
+            dataout = Tweet.query.offset(offset).limit(end).all()
     else:
         aid = Author.query.filter_by(handle=author).first()
         aid = aid.id
@@ -266,7 +266,7 @@ def ApiUpdateAuthorData(author):
     apiut.GetAuthorData(author)
 
     Forward = request.args.get("next")
-    render_template("index.html")
+
     if Forward:
         return redirect(Forward)
     else:
